@@ -1,0 +1,85 @@
+{
+  "runtime": {
+    "description": "运行设置",
+    "type": "object",
+    "hint": "在 Cursor Dashboard 的 API Keys 页面创建用户 API Key 或服务账号 Key。团队 Admin Key 不能用于 SDK。密钥只填在这里，模型提供商里的占位值不用改。",
+    "items": {
+      "enabled": {
+        "description": "启用插件提供商",
+        "type": "bool",
+        "default": true
+      },
+      "api_key": {
+        "description": "Cursor API Key",
+        "type": "string",
+        "hint": "以 crsr_ 开头。不要发到群里，也不要截图。",
+        "default": ""
+      },
+      "allow_env_key": {
+        "description": "允许读取 CURSOR_API_KEY",
+        "type": "bool",
+        "hint": "默认关闭。只在插件配置和提供商 Key 都为空时，才读取 AstrBot 进程里的环境变量。",
+        "default": false
+      },
+      "runtime_mode": {
+        "description": "运行位置",
+        "type": "string",
+        "options": ["local", "cloud"],
+        "hint": "local 在这台电脑上运行。cloud 在 Cursor 托管的虚拟机上运行。",
+        "default": "local"
+      },
+      "models": {
+        "description": "模型列表",
+        "type": "text",
+        "hint": "每行一个模型 ID，首行是默认模型。在线目录获取失败时使用这份列表。composer-2.5 是当前 SDK 文档中的默认模型，auto 交给服务端选择。",
+        "default": "composer-2.5\nauto"
+      },
+      "workspace": {
+        "description": "本地工作目录",
+        "type": "string",
+        "hint": "留空时使用插件自己的空目录。不要填 AstrBot 安装目录或 data 目录，里面有令牌、聊天和记忆数据。",
+        "default": ""
+      },
+      "builtin_tools": {
+        "description": "本地内置工具",
+        "type": "string",
+        "hint": "留空表示只回复文字，不读文件、不改文件、不跑命令。填写 default 使用 Cursor 默认工具。也可以填写 read,grep,glob,ls。仅 local 有效。",
+        "default": ""
+      },
+      "timeout_seconds": {
+        "description": "单次运行超时（秒）",
+        "type": "int",
+        "default": 180
+      },
+      "max_attempts": {
+        "description": "可重试错误的尝试次数",
+        "type": "int",
+        "hint": "包含第一次。只对 SDK 标记为可重试、且运行还没开始的错误生效。",
+        "default": 2
+      }
+    }
+  },
+  "cloud": {
+    "description": "Cloud 设置",
+    "type": "object",
+    "hint": "只有运行位置选 cloud 时生效。仓库留空时尝试创建无仓库的 Cloud Agent，账号需要开通这项能力。",
+    "items": {
+      "repo_url": {
+        "description": "仓库地址",
+        "type": "string",
+        "default": ""
+      },
+      "starting_ref": {
+        "description": "起始分支或提交",
+        "type": "string",
+        "hint": "留空使用仓库默认分支。",
+        "default": ""
+      },
+      "auto_create_pr": {
+        "description": "运行结束后自动创建 PR",
+        "type": "bool",
+        "default": false
+      }
+    }
+  }
+}
