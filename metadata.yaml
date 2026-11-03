@@ -2,7 +2,7 @@ name: astrbot_plugin_cursor
 display_name: Cursor
 short_desc: 把 Cursor Agent 接到 AstrBot，用作聊天模型
 desc: 使用 Cursor Python SDK，把 Cursor Agent 作为 AstrBot 聊天模型。认证使用用户 API Key 或服务账号 Key。
-version: v0.1.0
+version: v0.1.1
 author: Iking
 repo: https://github.com/Iking123/astrbot_plugin_cursor
 social_link: https://github.com/Iking123

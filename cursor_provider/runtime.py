@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-import logging
 import time
 import uuid
 from dataclasses import dataclass
@@ -10,11 +9,11 @@ from datetime import timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
 
+from astrbot.api import logger
+
 from .errors import CursorPluginError, CursorRunFailedError, exception_text, redact
 from .prompt import ImageInput
 from .usage import UsageNumbers, map_usage
-
-logger = logging.getLogger("astrbot_plugin_cursor")
 
 
 @dataclass(frozen=True)

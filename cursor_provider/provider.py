@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from collections.abc import AsyncGenerator
 
+from astrbot.api import logger
 from astrbot.core.exceptions import EmptyModelOutputError
 from astrbot.core.provider.entities import LLMResponse, TokenUsage
 from astrbot.core.provider.provider import Provider
@@ -42,7 +43,10 @@ class ProviderCursor(Provider):
         try:
             live = await service.runtime.list_models(api_key, workspace)
         except Exception as exc:
-            service_logger(redact(exception_text(exc), api_key))
+            logger.warning(
+                "Cursor model list failed: %s",
+                redact(exception_text(exc), api_key),
+            )
             return list(settings.models)
         return live or list(settings.models)
 
@@ -147,13 +151,4 @@ def _astr_usage(usage: UsageNumbers | None) -> TokenUsage | None:
         input_other=usage.input_other,
         input_cached=usage.input_cached,
         output=usage.output,
-    )
-
-
-def service_logger(message: str) -> None:
-    import logging
-
-    logging.getLogger("astrbot_plugin_cursor").warning(
-        "Cursor model list failed: %s",
-        message,
     )
